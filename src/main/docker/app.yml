@@ -1,0 +1,21 @@
+version: '2'
+services:
+    sjtuce-app:
+        image: sjtuce
+        external_links:
+            - sjtuce-mysql:mysql
+            - sjtuce-elasticsearch:elasticsearch
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod
+            - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/sjtuce?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=elasticsearch:9300
+        ports:
+            - 8080:8080
+    sjtuce-mysql:
+        extends:
+            file: mysql.yml
+            service: sjtuce-mysql
+    sjtuce-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: sjtuce-elasticsearch
